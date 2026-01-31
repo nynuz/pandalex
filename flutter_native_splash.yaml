@@ -1,0 +1,14 @@
+flutter_native_splash:
+  # Il colore di sfondo - Hex: #090909
+  color: "#090909"
+  image: assets/images/splash.png
+
+  # Configurazione specifica per Android 12+, che gestisce le icone in modo diverso.
+  # È buona norma specificarla.
+  android_12:
+    image: assets/images/splash.png
+    color: "#090909"
+
+  # Assicurati che il pacchetto si applichi a entrambe le piattaforme.
+  android: true
+  ios: true
