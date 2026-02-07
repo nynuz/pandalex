@@ -88,7 +88,10 @@ class _SearchBarState extends State<SearchBar> {
             child: TextField(
               controller: _controller,
               onSubmitted: (_) => _handleSearch(),
-              onChanged: _onSearchChanged,
+              onChanged: (value) {
+                // Forza rebuild per mostrare/nascondere il pulsante X
+                setState(() {});
+              },
               decoration: InputDecoration(
                 hintText: 'Cerca normative...',
                 hintStyle: GoogleFonts.lato(textStyle: AppConstants.cardSubtitle),
