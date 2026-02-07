@@ -17,6 +17,8 @@ import '../screens/normative_in_evidenza_screen.dart';
 import '../screens/normative_screen.dart';
 import '../screens/consulenze_screen.dart';
 import '../screens/eventi_pubblici_screen.dart';
+import '../widgets/filter_modal.dart';
+import '../models/active_filters.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -30,6 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final FuzzySearchService _fuzzySearch = FuzzySearchService();
   List<Normativa> allNormative = [];
   bool isIndexed = false;
+  bool isFilterModalVisible = false;
+  ActiveFilters activeFilters = ActiveFilters(categoria: []);
+  List<String> availableCategories = [];
   
   // Gestione della selezione del BottomNavigationBar
   void _onItemTapped(int index) {
@@ -57,13 +62,14 @@ class _HomeScreenState extends State<HomeScreen> {
     
     print('🔍 Ricerca homepage: "${query}" → ${results.length} risultati');
     
-    // Naviga alla schermata Normative con i risultati pre-filtrati
+    // Naviga alla schermata Normative con i risultati pre-filtrati e i filtri attivi
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => NormativeScreen(
           initialQuery: query,
           preFilteredResults: results, // Passa i risultati già filtrati
+          initialFilters: activeFilters.totalCount > 0 ? activeFilters : null,
         ),
       ),
     );
@@ -77,21 +83,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadAndIndexNormative() async {
     try {
-      // Carica tutte le normative
+      // Carica tutte le normative e le categorie
       final normative = await ApiService().getAllArticles();
-      
+      final categories = await ApiService().getArticleCategories();
+
       // Indicizza per la ricerca fuzzy
       //_fuzzySearch.indexNormative(normative);
-      
+
       setState(() {
         allNormative = normative;
+        availableCategories = categories;
         isIndexed = true;
       });
-      
+
       print('✅ Homepage pronta con ${normative.length} normative indicizzate');
     } catch (e) {
       print('❌ Errore caricamento normative per ricerca: $e');
     }
+  }
+
+  void _applyFilters(ActiveFilters filters) {
+    setState(() {
+      activeFilters = filters;
+    });
   }
 
   @override
@@ -104,8 +118,10 @@ class _HomeScreenState extends State<HomeScreen> {
         statusBarBrightness: Brightness.dark,
       ),
     );
-    
-    return EmergencyScaffold(
+
+    return Stack(
+      children: [
+        EmergencyScaffold(
       title: "Homepage",
       selectedNavIndex: _selectedIndex,
       onNavItemTapped: _onItemTapped,
@@ -152,6 +168,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+        ),
+
+        FilterModal(
+          visible: isFilterModalVisible,
+          onClose: () => setState(() => isFilterModalVisible = false),
+          onApply: _applyFilters,
+          initialFilters: activeFilters,
+          categorie: availableCategories,
+        ),
+      ],
     );
   }
 
@@ -260,8 +286,61 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildSearchBar() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0),
-      child: custom.SearchBar(
-        onSearch: _handleHomeSearch,
+      child: Row(
+        children: [
+          Expanded(
+            child: custom.SearchBar(
+              onSearch: _handleHomeSearch,
+            ),
+          ),
+          const SizedBox(width: 8),
+          GestureDetector(
+            onTap: () => setState(() => isFilterModalVisible = true),
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: AppConstants.gray200,
+                shape: BoxShape.circle,
+              ),
+              child: Stack(
+                children: [
+                  Icon(
+                    Icons.tune,
+                    color: AppConstants.gray700,
+                    size: 24,
+                  ),
+                  if (activeFilters.totalCount > 0)
+                    Positioned(
+                      right: 0,
+                      top: -2,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          color: AppConstants.orangeDark,
+                          shape: BoxShape.circle,
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 18,
+                          minHeight: 18,
+                        ),
+                        child: Text(
+                          activeFilters.totalCount.toString(),
+                          style: GoogleFonts.lato(
+                            textStyle: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                              color: AppConstants.white
+                            )
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

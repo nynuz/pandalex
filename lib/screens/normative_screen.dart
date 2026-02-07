@@ -17,11 +17,13 @@ import '../screens/normativa_detail_screen.dart';
 class NormativeScreen extends StatefulWidget {
   final String? initialQuery;
   final List<Normativa>? preFilteredResults;
-  
+  final ActiveFilters? initialFilters;
+
   const NormativeScreen({
     Key? key,
     this.initialQuery,
     this.preFilteredResults,
+    this.initialFilters,
   }) : super(key: key);
 
   @override
@@ -56,13 +58,18 @@ class _NormativeScreenState extends State<NormativeScreen> {
   @override
   void initState() {
     super.initState();
-    
+
     // IMPOSTA LA QUERY INIZIALE NEL CONTROLLER
     if (widget.initialQuery != null && widget.initialQuery!.isNotEmpty) {
       currentSearchQuery = widget.initialQuery!;
       _searchController.text = widget.initialQuery!; // ✅ AGGIUNGI QUESTA RIGA
     }
-    
+
+    // IMPOSTA I FILTRI INIZIALI DALLA HOMEPAGE
+    if (widget.initialFilters != null) {
+      activeFilters = widget.initialFilters!;
+    }
+
     _loadInitialData();
     
     // Se abbiamo risultati pre-filtrati dalla homepage
