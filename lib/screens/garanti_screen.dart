@@ -127,16 +127,19 @@ class _GarantiScreenState extends State<GarantiScreen> {
 
   Future<void> _createCustomMarkerIcon() async {
     try {
-      customMarkerIcon = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(size: Size(32, 32)),
-        'assets/images/marker.png',
-      );
+      customMarkerIcon = await BitmapDescriptor.asset(
+        ImageConfiguration(
+          size: const Size(32, 32),
+          devicePixelRatio: 2.5, // Riduce le dimensioni su schermi ad alta densità
+          ),
+          'assets/images/marker.png',
+          );
     } catch (e) {
       print('Errore nel caricamento dell\'icona marker: $e');
-      // Usa l'icona di default se il caricamento fallisce
       customMarkerIcon = BitmapDescriptor.defaultMarker;
     }
   }
+
 
   void _showPanel(Garante garante) {
     setState(() {
