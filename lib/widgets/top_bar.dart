@@ -21,7 +21,9 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
     final isHomePage = title == 'Homepage';
 
     return Container(
-      padding: const EdgeInsets.only(top: 24),
+      padding: EdgeInsets.only(
+        top: MediaQuery.of(context).padding.top + 8,
+      ),
       decoration: BoxDecoration(
         color: AppConstants.acidGreen,
         boxShadow: [
