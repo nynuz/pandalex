@@ -45,6 +45,9 @@
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>L'app richiede l'accesso per salvare foto nella galleria.</string>
 
+	<key>io.flutter.embedded_views_preview</key>
+  	<true/>
+
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
