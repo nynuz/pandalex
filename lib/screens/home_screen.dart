@@ -106,6 +106,13 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       activeFilters = filters;
     });
+    print('🔍 Filtri applicati in homepage: ${filters.categoria.length} categorie');
+  }
+
+  void _closeFilterModal() {
+    setState(() {
+      isFilterModalVisible = false;
+    });
   }
 
   @override
@@ -171,8 +178,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
 
         FilterModal(
+          key: ValueKey('filter_modal_${activeFilters.totalCount}'),
           visible: isFilterModalVisible,
-          onClose: () => setState(() => isFilterModalVisible = false),
+          onClose: _closeFilterModal,
           onApply: _applyFilters,
           initialFilters: activeFilters,
           categorie: availableCategories,
