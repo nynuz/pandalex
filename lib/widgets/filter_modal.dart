@@ -52,10 +52,11 @@ class _FilterModalState extends State<FilterModal> {
     });
   }
 
-  void _clearAllFilters() {
-    setState(() {
-      _currentFilters = ActiveFilters(categoria: []);
-    });
+  void _resetFilters() {
+    // Reset e applica immediatamente
+    final emptyFilters = ActiveFilters(categoria: []);
+    widget.onApply(emptyFilters);
+    widget.onClose();
   }
 
   void _applyFilters() {
@@ -198,14 +199,21 @@ class _FilterModalState extends State<FilterModal> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: TextButton(
-                          onPressed: _clearAllFilters,
+                        child: OutlinedButton(
+                          onPressed: _resetFilters,
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: AppConstants.orangeDark,
+                            side: BorderSide(color: AppConstants.orangeDark, width: 1.5),
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
                           child: Text(
-                            'Cancella tutto',
+                            'Reset filtri',
                             style: GoogleFonts.lato(
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
-                              color: AppConstants.gray600,
                             ),
                           ),
                         ),
