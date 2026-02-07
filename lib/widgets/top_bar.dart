@@ -117,7 +117,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize {
-    final double height = kToolbarHeight + 24 + (showEmergencyBanner ? 40 : 0);
+    final double height = kToolbarHeight + 56 + (showEmergencyBanner ? 40 : 0);
     return Size.fromHeight(height);
   }
 }
