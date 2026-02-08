@@ -86,6 +86,18 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
                       ),
                     ),
                   ),
+
+                  // Logo panda
+                  Positioned(
+                    right: 24,
+                    top: 0,
+                    bottom: 0,
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      //height: 28,
+                      width: 28,
+                    ),
+                  ),
                   
                   // Hamburger menu posizionato a destra
                   Positioned(
