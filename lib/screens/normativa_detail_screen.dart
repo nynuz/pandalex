@@ -107,7 +107,7 @@ class _NormativaDetailScreenState extends State<NormativaDetailScreen> {
     );
 
     return EmergencyScaffold(
-      title: "Dettaglio Normativa",
+      title: "Normativa",
       showBackButton: true,
       selectedNavIndex: _selectedIndex,
       onNavItemTapped: _onItemTapped,

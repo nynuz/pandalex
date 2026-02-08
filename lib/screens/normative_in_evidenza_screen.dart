@@ -102,7 +102,7 @@ class _NormativeInEvidenzaScreenState extends State<NormativeInEvidenzaScreen> {
     );
 
     return EmergencyScaffold(
-      title: "Normative in Evidenza",
+      title: "⭐ Normative",
       showBackButton: true,
       selectedNavIndex: -1,
       onNavItemTapped: (_) {},

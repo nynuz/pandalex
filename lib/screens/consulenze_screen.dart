@@ -185,7 +185,7 @@ class _ConsulenzeScreenState extends State<ConsulenzeScreen> {
     );
 
     return EmergencyScaffold(
-      title: "Consulenza Legali",
+      title: "Consulenze",
       showBackButton: true,
       selectedNavIndex: _selectedIndex,
       onNavItemTapped: _onItemTapped,

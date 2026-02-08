@@ -136,7 +136,7 @@ class _SegnalazioneScreenState extends State<SegnalazioneScreen> {
   @override
   Widget build(BuildContext context) {
     return EmergencyScaffold(
-      title: "Segnalazione di Pericolo",
+      title: "Segnalazioni",
       showBackButton: true,
       showBottomNav: false,
       body: BackgroundWrapper(

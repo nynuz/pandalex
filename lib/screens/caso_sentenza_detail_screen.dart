@@ -105,7 +105,7 @@ class _CasoSentenzaDetailScreenState extends State<CasoSentenzaDetailScreen> {
     );
 
     return EmergencyScaffold(
-      title: "Dettaglio Caso",
+      title: "Sentenza",
       showBackButton: true,
       selectedNavIndex: _selectedIndex,
       onNavItemTapped: _onItemTapped,

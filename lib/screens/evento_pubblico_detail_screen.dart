@@ -27,7 +27,7 @@ class _EventoPubblicoDetailScreenState extends State<EventoPubblicoDetailScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const TopBar(
-        title: 'Dettaglio Evento',
+        title: 'Evento',
         showBackButton: true,
       ),
       bottomNavigationBar: BottomNavigationWidget(

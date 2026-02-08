@@ -144,7 +144,7 @@ class _CasiSentenzeScreenState extends State<CasiSentenzeScreen> {
       ),
     );
     return EmergencyScaffold(
-      title: "Casi e Sentenze",
+      title: "Sentenze",
       showBackButton: true,
       selectedNavIndex: _selectedIndex,
       onNavItemTapped: _onItemTapped,

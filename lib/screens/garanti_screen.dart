@@ -397,7 +397,7 @@ class _GarantiScreenState extends State<GarantiScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const TopBar(
-        title: "Mappa dei Garanti",
+        title: "Garanti",
         showBackButton: true,
       ),
       endDrawer: const AppDrawer(),

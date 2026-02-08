@@ -260,7 +260,7 @@ class _NormativeScreenState extends State<NormativeScreen> {
     return Stack(
       children: [
         EmergencyScaffold(
-          title: "Lista Normative",
+          title: "Normative",
           showBackButton: true,
           selectedNavIndex: _selectedIndex,
           onNavItemTapped: _onItemTapped,
