@@ -89,13 +89,13 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
 
                   // Logo panda
                   Positioned(
-                    right: 24,
+                    right: 48,
                     top: 0,
-                    bottom: 0,
+                    bottom: -32,
                     child: Image.asset(
                       'assets/images/logo.png',
                       //height: 28,
-                      width: 28,
+                      width: 80,
                     ),
                   ),
                   
