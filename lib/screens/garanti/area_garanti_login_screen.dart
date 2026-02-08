@@ -65,7 +65,7 @@ class _AreaGarantiLoginScreenState extends State<AreaGarantiLoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const TopBar(
-        title: 'Area Garanti',
+        title: 'Dashboard',
         showBackButton: true,
       ),
       body: SafeArea(

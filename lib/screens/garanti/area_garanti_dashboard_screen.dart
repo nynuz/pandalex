@@ -58,7 +58,7 @@ class _AreaGarantiDashboardScreenState extends State<AreaGarantiDashboardScreen>
 
     return Scaffold(
       appBar: TopBar(
-        title: 'Dashboard Garante',
+        title: 'Dashboard',
         showBackButton: false,
       ),
       endDrawer: const AppDrawer(),

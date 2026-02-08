@@ -88,7 +88,7 @@ class _AreaGarantiEventiListScreenState extends State<AreaGarantiEventiListScree
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const TopBar(
-        title: 'I Miei Eventi',
+        title: 'Eventi',
         showBackButton: true,
       ),
       endDrawer: const AppDrawer(),

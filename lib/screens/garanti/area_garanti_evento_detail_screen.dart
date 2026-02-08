@@ -86,7 +86,7 @@ class _AreaGarantiEventoDetailScreenState extends State<AreaGarantiEventoDetailS
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const TopBar(
-        title: 'Dettaglio Evento',
+        title: 'Evento',
         showBackButton: true,
       ),
       endDrawer: const AppDrawer(),

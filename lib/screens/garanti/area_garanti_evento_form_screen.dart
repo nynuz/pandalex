@@ -232,7 +232,7 @@ class _AreaGarantiEventoFormScreenState extends State<AreaGarantiEventoFormScree
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TopBar(
-        title: _isModifica ? 'Modifica Evento' : 'Crea Evento',
+        title: _isModifica ? 'Modifica' : 'Crea',
         showBackButton: true,
       ),
       endDrawer: const AppDrawer(),
