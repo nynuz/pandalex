@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../app_constants.dart';
 import '../../providers/garante_auth_provider.dart';
 import '../../widgets/top_bar.dart';
+import '../../widgets/app_drawer.dart';
 import 'area_garanti_dashboard_screen.dart';
 
 class AreaGarantiLoginScreen extends StatefulWidget {
@@ -68,6 +69,7 @@ class _AreaGarantiLoginScreenState extends State<AreaGarantiLoginScreen> {
         title: 'Dashboard',
         showBackButton: true,
       ),
+      endDrawer: const AppDrawer(),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(

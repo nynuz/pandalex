@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../app_constants.dart';
 import '../../providers/garante_auth_provider.dart';
 import '../../widgets/top_bar.dart';
+import '../../widgets/app_drawer.dart';
 
 class AreaGarantiProfiloScreen extends StatelessWidget {
   const AreaGarantiProfiloScreen({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class AreaGarantiProfiloScreen extends StatelessWidget {
         title: 'Profilo',
         showBackButton: true,
       ),
+      endDrawer: const AppDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -91,19 +93,6 @@ class AreaGarantiProfiloScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 32),
-
-              // Sezione Elimina Account
-              Text(
-                'Zona Pericolosa',
-                style: GoogleFonts.lato(
-                  textStyle: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.red,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
 
               Card(
                 elevation: 2,
