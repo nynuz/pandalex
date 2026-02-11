@@ -6,6 +6,7 @@ import '../../providers/garante_auth_provider.dart';
 import '../../services/auth_garanti_service.dart';
 import '../../widgets/top_bar.dart';
 import '../../widgets/app_drawer.dart';
+import 'area_garanti_wrapper.dart';
 
 class AreaGarantiProfiloScreen extends StatelessWidget {
   const AreaGarantiProfiloScreen({Key? key}) : super(key: key);
@@ -333,9 +334,15 @@ class AreaGarantiProfiloScreen extends StatelessWidget {
                   ),
                 );
 
-                // Torna alla home (il wrapper gestirà il redirect al login)
+                // Ricostruisci completamente lo stack navigando al wrapper
+                // Questo forza il Consumer del wrapper a controllare di nuovo l'autenticazione
                 if (context.mounted) {
-                  navigator.popUntil((route) => route.isFirst);
+                  navigator.pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => const AreaGarantiWrapper(),
+                    ),
+                    (route) => false, // Rimuovi tutte le route precedenti
+                  );
                 }
               } else {
                 // Errore - mostra messaggio
