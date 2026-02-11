@@ -41,9 +41,10 @@ class _AreaGarantiLoginScreenState extends State<AreaGarantiLoginScreen> {
       _passwordController.text,
     );
 
-    setState(() => _isLoading = false);
-
+    // Controllo mounted PRIMA di chiamare setState
     if (!mounted) return;
+
+    setState(() => _isLoading = false);
 
     if (result['success']) {
       // Login riuscito - naviga alla dashboard
