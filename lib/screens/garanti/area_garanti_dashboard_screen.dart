@@ -11,6 +11,7 @@ import '../../widgets/garanti/evento_card_preview.dart';
 import 'area_garanti_eventi_list_screen.dart';
 import 'area_garanti_evento_detail_screen.dart';
 import 'area_garanti_evento_form_screen.dart';
+import 'area_garanti_profilo_screen.dart';
 
 class AreaGarantiDashboardScreen extends StatefulWidget {
   const AreaGarantiDashboardScreen({Key? key}) : super(key: key);
@@ -124,89 +125,100 @@ class _AreaGarantiDashboardScreenState extends State<AreaGarantiDashboardScreen>
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: AppConstants.blueNcs,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: const Icon(
-                Icons.shield,
-                color: Colors.white,
-                size: 32,
-              ),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AreaGarantiProfiloScreen(),
             ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Benvenuto,',
-                    style: GoogleFonts.lato(
-                      textStyle: const TextStyle(
-                        fontSize: 14,
-                        color: AppConstants.gray600,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    nomeGarante,
-                    style: GoogleFonts.lato(
-                      textStyle: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: AppConstants.gray800,
-                      ),
-                    ),
-                  ),
-                ],
+          );
+        },
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppConstants.blueNcs,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(
+                  Icons.shield,
+                  color: Colors.white,
+                  size: 32,
+                ),
               ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.logout, color: Colors.red),
-              onPressed: () async {
-                final confirmed = await showDialog<bool>(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text(
-                      'Logout',
-                      style: GoogleFonts.lato(fontWeight: FontWeight.w600),
-                    ),
-                    content: Text(
-                      'Sei sicuro di voler uscire?',
-                      style: GoogleFonts.lato(),
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, false),
-                        child: Text('Annulla', style: GoogleFonts.lato()),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, true),
-                        child: Text(
-                          'Esci',
-                          style: GoogleFonts.lato(color: Colors.red),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Benvenuto,',
+                      style: GoogleFonts.lato(
+                        textStyle: const TextStyle(
+                          fontSize: 14,
+                          color: AppConstants.gray600,
                         ),
                       ),
-                    ],
-                  ),
-                );
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      nomeGarante,
+                      style: GoogleFonts.lato(
+                        textStyle: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: AppConstants.gray800,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.logout, color: Colors.red),
+                onPressed: () async {
+                  final confirmed = await showDialog<bool>(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text(
+                        'Logout',
+                        style: GoogleFonts.lato(fontWeight: FontWeight.w600),
+                      ),
+                      content: Text(
+                        'Sei sicuro di voler uscire?',
+                        style: GoogleFonts.lato(),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, false),
+                          child: Text('Annulla', style: GoogleFonts.lato()),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, true),
+                          child: Text(
+                            'Esci',
+                            style: GoogleFonts.lato(color: Colors.red),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
 
-                if (confirmed == true && mounted) {
-                  await context.read<GaranteAuthProvider>().logout();
-                  if (mounted) {
-                    Navigator.pop(context); // Il wrapper gestirà il redirect al login
+                  if (confirmed == true && mounted) {
+                    await context.read<GaranteAuthProvider>().logout();
+                    if (mounted) {
+                      Navigator.pop(context); // Il wrapper gestirà il redirect al login
+                    }
                   }
-                }
-              },
-            ),
-          ],
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
