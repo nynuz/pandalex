@@ -102,6 +102,7 @@ class AuthGarantiService {
   }
 
   // Elimina l'account del garante corrente
+  // NOTA: Non fa logout automatico, deve essere gestito dal chiamante
   Future<Map<String, dynamic>> eliminaAccount() async {
     try {
       final user = _supabase.auth.currentUser;
@@ -116,9 +117,6 @@ class AuthGarantiService {
       final response = await _supabase.rpc('delete_garante_account');
 
       if (response != null && response['success'] == true) {
-        // Logout automatico dopo eliminazione
-        await logout();
-
         return {
           'success': true,
           'message': response['message'] ?? 'Account eliminato con successo',

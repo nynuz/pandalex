@@ -305,31 +305,39 @@ class AreaGarantiProfiloScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () async {
-              Navigator.pop(context); // Chiudi dialog di conferma
+              // Ottieni il navigator prima di chiudere il dialog
+              final navigator = Navigator.of(context);
+              final scaffoldMessenger = ScaffoldMessenger.of(context);
+              final authProvider = context.read<GaranteAuthProvider>();
+
+              navigator.pop(); // Chiudi dialog di conferma
 
               // Mostra loading dialog
               showDialog(
                 context: context,
                 barrierDismissible: false,
-                builder: (context) => Center(
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CircularProgressIndicator(
-                            color: AppConstants.blueNcs,
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            'Eliminazione in corso...',
-                            style: GoogleFonts.lato(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
+                builder: (context) => WillPopScope(
+                  onWillPop: () async => false,
+                  child: Center(
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CircularProgressIndicator(
+                              color: AppConstants.blueNcs,
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 16),
+                            Text(
+                              'Eliminazione in corso...',
+                              style: GoogleFonts.lato(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -340,14 +348,17 @@ class AreaGarantiProfiloScreen extends StatelessWidget {
               final authService = AuthGarantiService();
               final result = await authService.eliminaAccount();
 
-              if (!context.mounted) return;
-
-              // Chiudi loading dialog
-              Navigator.pop(context);
+              // Chiudi loading dialog se il context è ancora valido
+              if (context.mounted) {
+                navigator.pop();
+              }
 
               if (result['success']) {
-                // Successo - mostra messaggio e torna alla home
-                ScaffoldMessenger.of(context).showSnackBar(
+                // Elimina dati riuscita - ora fai logout
+                await authProvider.logout();
+
+                // Mostra messaggio di successo
+                scaffoldMessenger.showSnackBar(
                   SnackBar(
                     content: Text(
                       'Account eliminato con successo',
@@ -359,10 +370,12 @@ class AreaGarantiProfiloScreen extends StatelessWidget {
                 );
 
                 // Torna alla home (il wrapper gestirà il redirect al login)
-                Navigator.of(context).popUntil((route) => route.isFirst);
+                if (context.mounted) {
+                  navigator.popUntil((route) => route.isFirst);
+                }
               } else {
                 // Errore - mostra messaggio
-                ScaffoldMessenger.of(context).showSnackBar(
+                scaffoldMessenger.showSnackBar(
                   SnackBar(
                     content: Text(
                       result['message'] ?? 'Errore durante l\'eliminazione',
