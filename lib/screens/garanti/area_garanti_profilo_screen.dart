@@ -305,56 +305,20 @@ class AreaGarantiProfiloScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () async {
-              // Ottieni il navigator prima di chiudere il dialog
+              // Salva i riferimenti necessari
               final navigator = Navigator.of(context);
               final scaffoldMessenger = ScaffoldMessenger.of(context);
               final authProvider = context.read<GaranteAuthProvider>();
 
-              navigator.pop(); // Chiudi dialog di conferma
+              // Chiudi dialog di conferma
+              navigator.pop();
 
-              // Mostra loading dialog
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (context) => WillPopScope(
-                  onWillPop: () async => false,
-                  child: Center(
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(24.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CircularProgressIndicator(
-                              color: AppConstants.blueNcs,
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              'Eliminazione in corso...',
-                              style: GoogleFonts.lato(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-
-              // Esegui eliminazione
+              // Esegui eliminazione (senza loader)
               final authService = AuthGarantiService();
               final result = await authService.eliminaAccount();
 
-              // Chiudi loading dialog se il context è ancora valido
-              if (context.mounted) {
-                navigator.pop();
-              }
-
               if (result['success']) {
-                // Elimina dati riuscita - ora fai logout
+                // Eliminazione riuscita - fai logout
                 await authProvider.logout();
 
                 // Mostra messaggio di successo
