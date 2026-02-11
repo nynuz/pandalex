@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../app_constants.dart';
 import '../../providers/garante_auth_provider.dart';
+import '../../services/auth_garanti_service.dart';
 import '../../widgets/top_bar.dart';
 import '../../widgets/app_drawer.dart';
 
@@ -303,18 +304,75 @@ class AreaGarantiProfiloScreen extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: () {
-              // TODO: Implementare la cancellazione con Supabase
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'Funzionalità in arrivo - Integrazione Supabase in corso',
-                    style: GoogleFonts.lato(),
+            onPressed: () async {
+              Navigator.pop(context); // Chiudi dialog di conferma
+
+              // Mostra loading dialog
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => Center(
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CircularProgressIndicator(
+                            color: AppConstants.blueNcs,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'Eliminazione in corso...',
+                            style: GoogleFonts.lato(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  backgroundColor: Colors.orange,
                 ),
               );
+
+              // Esegui eliminazione
+              final authService = AuthGarantiService();
+              final result = await authService.eliminaAccount();
+
+              if (!context.mounted) return;
+
+              // Chiudi loading dialog
+              Navigator.pop(context);
+
+              if (result['success']) {
+                // Successo - mostra messaggio e torna alla home
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Account eliminato con successo',
+                      style: GoogleFonts.lato(),
+                    ),
+                    backgroundColor: AppConstants.green,
+                    duration: const Duration(seconds: 3),
+                  ),
+                );
+
+                // Torna alla home (il wrapper gestirà il redirect al login)
+                Navigator.of(context).popUntil((route) => route.isFirst);
+              } else {
+                // Errore - mostra messaggio
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      result['message'] ?? 'Errore durante l\'eliminazione',
+                      style: GoogleFonts.lato(),
+                    ),
+                    backgroundColor: Colors.red,
+                    duration: const Duration(seconds: 4),
+                  ),
+                );
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,

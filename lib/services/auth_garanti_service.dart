@@ -101,6 +101,44 @@ class AuthGarantiService {
     return _supabase.auth.currentUser;
   }
 
+  // Elimina l'account del garante corrente
+  Future<Map<String, dynamic>> eliminaAccount() async {
+    try {
+      final user = _supabase.auth.currentUser;
+      if (user == null) {
+        return {
+          'success': false,
+          'message': 'Utente non autenticato',
+        };
+      }
+
+      // Chiama la funzione RPC per eliminare l'account
+      final response = await _supabase.rpc('delete_garante_account');
+
+      if (response != null && response['success'] == true) {
+        // Logout automatico dopo eliminazione
+        await logout();
+
+        return {
+          'success': true,
+          'message': response['message'] ?? 'Account eliminato con successo',
+          'deleted_eventi': response['deleted_eventi'] ?? 0,
+        };
+      } else {
+        return {
+          'success': false,
+          'message': response?['message'] ?? 'Errore durante l\'eliminazione',
+        };
+      }
+    } catch (e) {
+      debugPrint('Errore eliminazione account: $e');
+      return {
+        'success': false,
+        'message': 'Errore durante l\'eliminazione: ${e.toString()}',
+      };
+    }
+  }
+
   // Messaggio di errore user-friendly
   String _getErrorMessage(String error) {
     if (error.contains('Invalid login credentials')) {
