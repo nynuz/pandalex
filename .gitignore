@@ -1,6 +1,10 @@
 # Environment variables
 .env
 
+# Android signing
+android/key.properties
+**/key.properties
+
 # Miscellaneous
 *.class
 *.log
