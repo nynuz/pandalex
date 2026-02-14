@@ -5,8 +5,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'screens/home_screen.dart';
-import 'screens/onboarding_screen.dart';
-import 'services/user_service.dart';
 import 'providers/garante_auth_provider.dart';
 import 'app_constants.dart';
 
@@ -74,19 +72,7 @@ class PandaLexApp extends StatelessWidget {
           ),
         ),
       ),
-      home: FutureBuilder<bool>(
-        future: UserService().hasCompletedOnboarding(),
-        builder: (context, snapshot) {
-          // Mentre sta caricando, mostra un container trasparente (usa lo splash nativo)
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(color: Colors.white);
-          }
-          
-          // Controlla se l'onboarding è completato
-          final hasCompletedOnboarding = snapshot.data ?? false;
-          return hasCompletedOnboarding ? const HomeScreen() : const OnboardingScreen();
-        },
-      ),
+      home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
