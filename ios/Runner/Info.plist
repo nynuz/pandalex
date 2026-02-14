@@ -29,21 +29,21 @@
 
 	<!-- PERMESSI LOCALIZZAZIONE --> 
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key> 
-	<string>L'app richiede l'accesso alla posizione per identificare la tua regione e fornirti i numeri di emergenza corretti per la tutela degli animali nella tua zona.</string>
+	<string>L'app PandaLex richiede l'accesso alla posizione per identificare la tua regione e fornirti i numeri di emergenza corretti per la tutela degli animali nella tua zona.</string>
 	<key>NSLocationWhenInUseUsageDescription</key> 
-	<string>L'app richiede l'accesso alla posizione per identificare la tua regione e fornirti i numeri di emergenza corretti per la tutela degli animali nella tua zona.</string>
+	<string>L'app PandaLex richiede l'accesso alla posizione per identificare la tua regione e fornirti i numeri di emergenza corretti per la tutela degli animali nella tua zona.</string>
 	<key>NSLocationAlwaysUsageDescription</key> 
-	<string>L'app richiede l'accesso alla posizione per identificare la tua regione e fornirti i numeri di emergenza corretti per la tutela degli animali nella tua zona.</string>
+	<string>L'app PandaLex richiede l'accesso alla posizione per identificare la tua regione e fornirti i numeri di emergenza corretti per la tutela degli animali nella tua zona.</string>
 	
-	<!-- PERMESSI FOTOCAMERA --> 
+	<!-- PERMESSI FOTOCAMERA -->
 	<key>NSCameraUsageDescription</key>
-	<string>L'app richiede l'accesso alla fotocamera per permettere ai garanti regionali di fotografare eventi relativi alla tutela degli animali.</string>
-	
+	<string>L'app PandaLex utilizza la fotocamera per permettere ai garanti regionali per la tutela degli animali di documentare le loro attività istituzionali. Ad esempio, i garanti possono scattare foto durante eventi educativi, campagne di sensibilizzazione o interventi sul territorio, che vengono poi pubblicate nell'app per informare i cittadini sulle iniziative di tutela degli animali nella loro regione.</string>
+
 	<!-- PERMESSI GALLERIA FOTO -->
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>L'app richiede l'accesso alla galleria per permettere ai garanti regionali di caricare foto di eventi relativi alla tutela degli animali.</string>
+	<string>L'app PandaLex accede alla galleria foto per permettere ai garanti regionali di selezionare e caricare immagini già salvate sul dispositivo relative alle loro attività di tutela degli animali. Ad esempio, un garante può caricare foto di eventi, campagne di sensibilizzazione o documentazione di interventi sul territorio per condividerle con i cittadini attraverso l'app.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>L'app richiede l'accesso per salvare foto nella galleria.</string>
+	<string>L'app PandaLex salva nella galleria le foto scattate durante la documentazione di eventi e attività istituzionali relative alla tutela degli animali, permettendo ai garanti di conservare una copia locale delle immagini pubblicate nell'app per future consultazioni o utilizzi.</string>
 
 	<key>io.flutter.embedded_views_preview</key>
   	<true/>
