@@ -5,7 +5,7 @@ import '../models/caso_sentenza.dart';
 import '../models/normativa.dart';
 
 class ApiService {
-  static const String baseUrl = 'https://pandalex.divi-lab.com/wp-json';
+  static const String baseUrl = 'https://pandalex.associazionepanda.it/wp-json';
   
   // Singleton pattern per riutilizzare l'istanza
   static final ApiService _instance = ApiService._internal();
