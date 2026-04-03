@@ -8,6 +8,7 @@ import 'screens/home_screen.dart';
 import 'screens/onboarding_screen.dart';
 import 'services/user_service.dart';
 import 'providers/garante_auth_provider.dart';
+import 'providers/group_chat_provider.dart';
 import 'app_constants.dart';
 
 void main() async {
@@ -34,6 +35,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => GaranteAuthProvider()),
+        ChangeNotifierProvider(create: (_) => GroupChatProvider()),
       ],
       child: const PandaLexApp(),
     ),

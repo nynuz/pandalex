@@ -12,6 +12,8 @@ import 'area_garanti_eventi_list_screen.dart';
 import 'area_garanti_evento_detail_screen.dart';
 import 'area_garanti_evento_form_screen.dart';
 import 'area_garanti_profilo_screen.dart';
+import 'area_garanti_group_chat_screen.dart';
+import '../../providers/group_chat_provider.dart';
 
 class AreaGarantiDashboardScreen extends StatefulWidget {
   const AreaGarantiDashboardScreen({Key? key}) : super(key: key);
@@ -49,6 +51,11 @@ class _AreaGarantiDashboardScreenState extends State<AreaGarantiDashboardScreen>
       });
     } else {
       setState(() => _isLoading = false);
+    }
+
+    // Carica il conteggio messaggi non letti per il badge della chat
+    if (mounted) {
+      context.read<GroupChatProvider>().loadUnreadCount();
     }
   }
 
@@ -95,17 +102,21 @@ class _AreaGarantiDashboardScreenState extends State<AreaGarantiDashboardScreen>
                 onRefresh: _loadDashboardData,
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Header con benvenuto
                       _buildWelcomeHeader(garante?.nomeCompleto ?? 'Garante'),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 12),
 
                       // Card riepilogo
                       _buildSummaryCard(),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 12),
+
+                      // Card accesso chat di gruppo
+                      _buildChatAccessCard(),
+                      const SizedBox(height: 36),
 
                       // Sezione ultimi eventi
                       _buildUltimiEventiSection(),
@@ -277,6 +288,109 @@ class _AreaGarantiDashboardScreenState extends State<AreaGarantiDashboardScreen>
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildChatAccessCard() {
+    return Consumer<GroupChatProvider>(
+      builder: (context, chatProvider, _) {
+        final unread = chatProvider.unreadCount;
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
+              ),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
+                onTap: () {
+                  context.read<GroupChatProvider>().initialize();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AreaGarantiGroupChatScreen(),
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: AppConstants.blueNcs.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
+                        ),
+                        child: const Icon(
+                          Icons.chat_bubble_outline,
+                          size: 32,
+                          color: AppConstants.blueNcs,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Chat Garanti',
+                              style: GoogleFonts.lato(
+                                textStyle: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppConstants.gray800,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'Gruppo riservato ai garanti',
+                              style: GoogleFonts.lato(
+                                textStyle: AppConstants.cardSubtitle,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16,
+                        color: AppConstants.gray400,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            // Badge messaggi non letti
+            if (unread > 0)
+              Positioned(
+                top: -6,
+                right: -6,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                  ),
+                  constraints: const BoxConstraints(minWidth: 24, minHeight: 24),
+                  child: Text(
+                    unread > 99 ? '99+' : '$unread',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.lato(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        );
+      },
     );
   }
 
